@@ -50,7 +50,13 @@ function Screen(props: Props) {
           src={props.state.backgroundUrl}
           tw="absolute w-full h-full"
         />
-        <div style={{ fontSize: 100, color: "white" }}>
+        <div style={{
+            fontSize: 150,
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            padding: "10px",
+            borderRadius: "8px",
+            color: "#FFFFFF"
+        }}>
           {props.state.name ?? "Quiz"}
         </div>
       </div>
@@ -64,10 +70,13 @@ function Screen(props: Props) {
           src={props.state.backgroundUrl}
           tw="absolute w-full h-full"
         />
-        <div style={{ fontSize: 150, backgroundColor: "rgba(0, 0, 0, 0.8)",
+        <div style={{
+            fontSize: 150,
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
             padding: "10px",
             borderRadius: "8px",
-            color: "#FFFFFF" }}>
+            color: "#FFFFFF"
+        }}>
           {props.state.win ? "You win!" : "You lose!"}
         </div>
         <div
