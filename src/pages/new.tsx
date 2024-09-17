@@ -250,7 +250,7 @@ function SavePopup({ questions }: { questions: Question[] }) {
                         return;
                       }
                       const name = prompt("What should we name this Quiz?");
-                      const backgroundUrl = prompt("What is background url?");
+                      const backgroundUrl = prompt("What is background url?(ex. https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/)");
 
                       if (name && backgroundUrl) {
                         publish.mutate({ name, backgroundUrl });

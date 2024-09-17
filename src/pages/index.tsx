@@ -41,7 +41,7 @@ export default function Example() {
                 Create Quiz
               </a>
               <a
-                href="https://warpcast.com/w1nt3r/0x89ca1588"
+                href="https://warpcast.com/d1ol/0xe6ba50c8"
                 className="text-sm font-semibold leading-6 text-white"
               >
                 View Demo <span aria-hidden="true">→</span>
