@@ -149,6 +149,7 @@ function render(
         state: {
           type: "intro",
           name: quiz.name,
+          backgroundUrl: quiz.backgroundUrl
         },
       },
       buttons: ["Start"],
@@ -163,6 +164,7 @@ function render(
         state: {
           type: "result",
           win: state.score === quiz.questions.length,
+          backgroundUrl: quiz.backgroundUrl
         },
       },
       buttons: ["Play Again"],
@@ -177,6 +179,7 @@ function render(
           question: question.question,
           answers: question.answers,
           selection: null,
+          backgroundUrl: question.backgroundUrl
         },
       },
       buttons: ["A", "B", "C", "D"].slice(0, question.answers.length),
@@ -194,6 +197,7 @@ function render(
             selected: state.selected,
             correct: question.correct,
           },
+          backgroundUrl: question.backgroundUrl
         },
       },
       buttons: ["Continue"],

@@ -12,11 +12,13 @@ const questionSchema = z.object({
   question: z.string().min(1).max(100),
   answers: z.array(z.string().max(50)).length(4),
   correct: z.number().min(0).max(3),
+  backgroundUrl: z.string()
 });
 
 export const quizSchema = z.object({
   name: z.string().min(1).max(100),
   questions: z.array(questionSchema),
+  backgroundUrl:  z.string()
 });
 
 export type Quiz = z.infer<typeof quizSchema>;

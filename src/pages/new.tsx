@@ -28,6 +28,7 @@ const columns: GridColumn[] = [
   { title: "C", width: 150 },
   { title: "D", width: 150 },
   { title: "Answer", width: 80 },
+  { title: "BackgroundUrl", width: 80 },
 ];
 
 export default function New() {
@@ -38,6 +39,7 @@ export default function New() {
         question: "What is the capital of France?",
         answers: ["Berlin", "Madrid", "Paris", "Rome"],
         correct: 2,
+        backgroundUrl: "https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/"
       },
     ]
   );
@@ -55,6 +57,7 @@ export default function New() {
   const getData = useCallback(
     ([col, row]: Item): GridCell => {
       const question = questions[row];
+        console.log(question);
       if (!question)
         return {
           kind: GridCellKind.Text,
@@ -63,7 +66,7 @@ export default function New() {
           allowOverlay: false,
           readonly: true,
         };
-
+        console.log(question);
       const data = [
         question.question,
         question.answers[0],
@@ -71,6 +74,7 @@ export default function New() {
         question.answers[2],
         question.answers[3],
         "ABCD".charAt(question.correct),
+          question.backgroundUrl
       ][col];
       return {
         kind: GridCellKind.Text,
@@ -87,6 +91,7 @@ export default function New() {
     ([col, row]: Item, cell: EditableGridCell) =>
       setQuestions((questions) => {
         const question: Question = JSON.parse(JSON.stringify(questions[row]));
+        // console.log(question)
         const value = cell.data?.toString() ?? "";
 
         if (col === 0) {
@@ -99,6 +104,9 @@ export default function New() {
           const newIndex = "ABCD".indexOf(value.toUpperCase());
           question.correct = newIndex === -1 ? question.correct : newIndex;
         }
+          if (col === 6) {
+              question.backgroundUrl = value;
+          }
         return [
           ...questions.slice(0, row),
           question,
@@ -112,7 +120,7 @@ export default function New() {
     () =>
       setQuestions((questions) => [
         ...questions,
-        { question: "New question?", answers: ["", "", "", ""], correct: 0 },
+        { question: "New question?", answers: ["", "", "", ""], correct: 0, backgroundUrl: "" },
       ]),
     []
   );
@@ -191,9 +199,9 @@ function useLocalState<T>(
 }
 
 function SavePopup({ questions }: { questions: Question[] }) {
-  const publish = useMutation<PublishResponse, unknown, { name: string }>({
-    mutationFn: async ({ name }) => {
-      const request: PublishRequest = { questions, name };
+  const publish = useMutation<PublishResponse, unknown, { name: string, backgroundUrl: string }>({
+    mutationFn: async ({ name, backgroundUrl }) => {
+      const request: PublishRequest = { questions, name, backgroundUrl };
       const response = await fetch("/api/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -242,8 +250,10 @@ function SavePopup({ questions }: { questions: Question[] }) {
                         return;
                       }
                       const name = prompt("What should we name this Quiz?");
-                      if (name) {
-                        publish.mutate({ name });
+                      const backgroundUrl = prompt("What is background url?");
+
+                      if (name && backgroundUrl) {
+                        publish.mutate({ name, backgroundUrl });
                       }
                     }}
                     className="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-wait"

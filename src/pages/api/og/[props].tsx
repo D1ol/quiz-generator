@@ -10,6 +10,7 @@ const schema = z.object({
     z.object({
       type: z.literal("intro"),
       name: z.string().optional(),
+      backgroundUrl: z.string().min(1)
     }),
     z.object({
       type: z.literal("question"),
@@ -21,10 +22,12 @@ const schema = z.object({
           correct: z.number(),
         })
         .nullable(),
+      backgroundUrl: z.string().min(1)
     }),
     z.object({
       type: z.literal("result"),
       win: z.boolean(),
+      backgroundUrl: z.string().min(1)
     }),
   ]),
 });
@@ -39,11 +42,12 @@ export const ImageData = {
 };
 
 function Screen(props: Props) {
+    console.log(props);
   if (props.state.type === "intro") {
     return (
       <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
         <img
-          src="https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/"
+          src={props.state.backgroundUrl}
           tw="absolute w-full h-full"
         />
         <div style={{ fontSize: 100, color: "white" }}>
@@ -57,18 +61,24 @@ function Screen(props: Props) {
     return (
       <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
         <img
-          src="https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/"
+          src={props.state.backgroundUrl}
           tw="absolute w-full h-full"
         />
-        <div style={{ fontSize: 100, color: "white" }}>
+        <div style={{ fontSize: 150, backgroundColor: "rgba(0, 0, 0, 0.8)",
+            padding: "10px",
+            borderRadius: "8px",
+            color: "#FFFFFF" }}>
           {props.state.win ? "You win!" : "You lose!"}
         </div>
         <div
           tw="flex flex-col items-center text-center"
-          style={{ fontSize: 50, color: "white", marginTop: 100 }}
+          style={{
+              fontSize: 50,
+              marginTop: 100,
+             }}
         >
-          <span>Create your own qiuz at</span>
-          <span style={{ color: "#FFBF00" }}>https://quizframe.xyz/</span>
+          {/*<span>Create your own qiuz at</span>*/}
+          {/*<span style={{ color: "#FFBF00" }}>https://quizframe.xyz/</span>*/}
         </div>
       </div>
     );
@@ -85,17 +95,21 @@ function Screen(props: Props) {
   const { selection } = props.state;
   return (
     <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
-      {/* <img
-        src="https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/"
+      {
+          <img
+        src={props.state.backgroundUrl}
         tw="absolute w-full h-full"
-      /> */}
+      />
+      }
       <WWTBAMUI
         green={selection && selection.correct}
         red={selection && selection.selected}
       />
       <div
         tw="absolute flex items-center justify-center text-center text-white text-5xl overflow-hidden"
-        style={{ left: 164, top: 99, width: 859, height: 154 }}
+        style={{ left: 164, top: 99, width: 859, height: 154,
+
+      }}
       >
         {props.state.question}
       </div>
@@ -113,7 +127,9 @@ function Screen(props: Props) {
             }}
           >
             <span>
-              <span style={{ color: "#FFBF00", marginRight: 10 }}>
+              <span style={{
+                  color: "#FFBF00", marginRight: 10,
+              }}>
                 {buttons[index]}:
               </span>{" "}
               {answer}
