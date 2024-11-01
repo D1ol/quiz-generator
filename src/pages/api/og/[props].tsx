@@ -148,19 +148,23 @@ function Screen(props: Props) {
                 );
             })}
             <div
-                tw="absolute flex items-center justify-center text-center text-white text-5xl overflow-hidden"
+                tw="absolute flex items-center justify-center text-center text-white text-4xl overflow-hidden"
                 style={{
-                    left: 164, top: 510, width: 859, height: 154,
+                    left: 325, top: 550, width: 600, height: 70,
 
                 }}
             >
-              <span>
+                <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
+
+              <span
+              >
                   Created by
                   <span style={{
-                      color: "#FFBF00", marginRight: 10, marginLeft: 10
+                      color: "#5cda09", marginRight: 10, marginLeft: 10
                   }}>D1ol
                   </span>
               </span>
+                </div>
             </div>
 
         </div>
