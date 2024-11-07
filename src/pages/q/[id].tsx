@@ -177,6 +177,8 @@ function render(
         state: {
           type: "question",
           question: question.question,
+          questionType: question.questionType,
+          questionUrl: question.questionUrl,
           answers: question.answers,
           selection: null,
           backgroundUrl: question.backgroundUrl
@@ -192,6 +194,8 @@ function render(
         state: {
           type: "question",
           question: question.question,
+          questionType: question.questionType,
+          questionUrl: question.questionUrl,
           answers: question.answers,
           selection: {
             selected: state.selected,

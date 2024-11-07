@@ -15,6 +15,8 @@ const schema = z.object({
         z.object({
             type: z.literal("question"),
             question: z.string(),
+            questionUrl: z.string(),
+            questionType: z.string(),
             answers: z.array(z.string()).length(4),
             selection: z
                 .object({
@@ -102,6 +104,84 @@ function Screen(props: Props) {
     ];
 
     const {selection} = props.state;
+
+    if(props.state.questionType == 'image')
+    {
+        return (
+            <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
+                {
+                    <img
+                        src={props.state.backgroundUrl}
+                        tw="absolute w-full h-full"
+                    />
+                }
+                <WWTBAMUI
+                    green={selection && selection.correct}
+                    red={selection && selection.selected}
+                />
+                <div
+                    tw="absolute flex items-center justify-center text-center text-white text-5xl overflow-hidden"
+                    style={{
+                        left: 164, top: 99, width: 859, height: 154,
+
+                    }}
+                >
+
+                    <img
+                        src={props.state.questionUrl}
+                        style={{
+                            width: 64,
+                            height: 64,
+                        }}
+                    />
+                </div>
+
+                {props.state.answers.map((answer, index) => {
+                    return (
+                        <div
+                            key={index}
+                            tw="absolute flex items-center justify-start text-left text-white text-4xl overflow-hidden"
+                            style={{
+                                left: coords[index].x,
+                                top: coords[index].y,
+                                width: 414,
+                                height: 85,
+                            }}
+                        >
+            <span>
+              <span style={{
+                  color: "#FFBF00", marginRight: 10,
+              }}>
+                {buttons[index]}:
+              </span>{" "}
+                {answer}
+            </span>
+                        </div>
+                    );
+                })}
+                <div
+                    tw="absolute flex items-center justify-center text-center text-white text-4xl overflow-hidden"
+                    style={{
+                        left: 325, top: 550, width: 600, height: 70,
+
+                    }}
+                >
+                    <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
+
+              <span
+              >
+                  Created by
+                  <span style={{
+                      color: "#5cda09", marginRight: 10, marginLeft: 10
+                  }}>D1ol
+                  </span>
+              </span>
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
@@ -121,6 +201,7 @@ function Screen(props: Props) {
 
                 }}
             >
+
                 {props.state.question}
             </div>
 

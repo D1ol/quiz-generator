@@ -10,6 +10,8 @@ export const redis = new Redis({
 
 const questionSchema = z.object({
   question: z.string().min(1).max(100),
+  questionType: z.string().min(1).max(5),
+  questionUrl: z.string(),
   answers: z.array(z.string().max(50)).length(4),
   correct: z.number().min(0).max(3),
   backgroundUrl: z.string()
