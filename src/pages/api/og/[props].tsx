@@ -269,7 +269,7 @@ function getImageOG(props: any, selection: any, coords: any, buttons: any) {
                 />
             </div>
 
-            {props.state.answers.map((answer, index) => {
+            {props.state.answers.map((answer: any, index: any) => {
                 return (
                     <div
                         key={index}
@@ -341,7 +341,7 @@ function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
                 {props.state.question}
             </div>
 
-            {props.state.answers.map((answer, index) => {
+            {props.state.answers.map((answer: any, index: any) => {
                 return (
                     <div
                         key={index}
