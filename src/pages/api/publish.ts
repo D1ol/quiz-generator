@@ -20,7 +20,8 @@ const questionSchema = z.object({
 export const quizSchema = z.object({
   name: z.string().min(1).max(100),
   questions: z.array(questionSchema),
-  backgroundUrl:  z.string()
+  backgroundUrl:  z.string(),
+  randomAnswerLabels: z.boolean()
 });
 
 export type Quiz = z.infer<typeof quizSchema>;

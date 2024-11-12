@@ -118,7 +118,14 @@ export default function New() {
         () =>
             setQuestions((questions) => [
                 ...questions,
-                {question: "New question?", questionType: 'text', questionUrl: '', answers: ["", "", "", ""], correct: 0, backgroundUrl: ""},
+                {
+                    question: "New question?",
+                    questionType: 'text',
+                    questionUrl: '',
+                    answers: ["", "", "", ""],
+                    correct: 0,
+                    backgroundUrl: ""
+                },
             ]),
         []
     );
@@ -197,9 +204,13 @@ function useLocalState<T>(
 }
 
 function SavePopup({questions}: { questions: Question[] }) {
-    const publish = useMutation<PublishResponse, unknown, { name: string, backgroundUrl: string }>({
-        mutationFn: async ({name, backgroundUrl}) => {
-            const request: PublishRequest = {questions, name, backgroundUrl};
+    const publish = useMutation<PublishResponse, unknown, {
+        name: string,
+        backgroundUrl: string,
+        randomAnswerLabels: boolean
+    }>({
+        mutationFn: async ({name, backgroundUrl, randomAnswerLabels}) => {
+            const request: PublishRequest = {questions, name, backgroundUrl, randomAnswerLabels};
             const response = await fetch("/api/publish", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -250,9 +261,10 @@ function SavePopup({questions}: { questions: Question[] }) {
                                             }
                                             const name = prompt("What should we name this Quiz?");
                                             const backgroundUrl = prompt("What is background url?(ex. https://ucarecdn.com/086039b7-788c-45fe-8af3-9bec5d239a20/)");
+                                            const randomAnswerLabels = !!prompt("Randomise answers labels?") ?? false;
 
-                                            if (name && backgroundUrl) {
-                                                publish.mutate({name, backgroundUrl});
+                                            if (name && backgroundUrl && randomAnswerLabels) {
+                                                publish.mutate({name, backgroundUrl, randomAnswerLabels});
                                             }
                                         }}
                                         className="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-wait"

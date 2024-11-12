@@ -149,7 +149,8 @@ function render(
         state: {
           type: "intro",
           name: quiz.name,
-          backgroundUrl: quiz.backgroundUrl
+          backgroundUrl: quiz.backgroundUrl,
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false
         },
       },
       buttons: ["Start"],
@@ -164,7 +165,8 @@ function render(
         state: {
           type: "result",
           win: state.score === quiz.questions.length,
-          backgroundUrl: quiz.backgroundUrl
+          backgroundUrl: quiz.backgroundUrl,
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false
         },
       },
       buttons: ["Play Again"],
@@ -181,7 +183,8 @@ function render(
           questionUrl: question.questionUrl,
           answers: question.answers,
           selection: null,
-          backgroundUrl: question.backgroundUrl
+          backgroundUrl: question.backgroundUrl,
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false
         },
       },
       buttons: ["A", "B", "C", "D"].slice(0, question.answers.length),
@@ -201,7 +204,8 @@ function render(
             selected: state.selected,
             correct: question.correct,
           },
-          backgroundUrl: question.backgroundUrl
+          backgroundUrl: question.backgroundUrl,
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false
         },
       },
       buttons: ["Continue"],
