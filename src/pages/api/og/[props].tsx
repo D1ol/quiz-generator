@@ -238,7 +238,7 @@ function WWTBAMUI({
 }
 
 
-function getImageOG(props, selection, coords, buttons) {
+function getImageOG(props: any, selection: any, coords: any, buttons: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
@@ -316,7 +316,7 @@ function getImageOG(props, selection, coords, buttons) {
     );
 }
 
-function getDefaultOG(props, selection, coords, buttons) {
+function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
@@ -388,7 +388,7 @@ function getDefaultOG(props, selection, coords, buttons) {
     );
 }
 
-function getResultOG(props) {
+function getResultOG(props: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             <img
@@ -418,7 +418,7 @@ function getResultOG(props) {
     );
 }
 
-function getIntroOG(props) {
+function getIntroOG(props: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             <img
