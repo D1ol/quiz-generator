@@ -67,7 +67,7 @@ function Screen(props: Props) {
 
     let buttons = buttonsLabels[0];
 
-    if(props.state.randomAnswerLabels){
+    if (props.state.randomAnswerLabels) {
         buttons = buttonsLabels[~~(Math.random() * buttonsLabels.length)];
     }
 
@@ -79,6 +79,10 @@ function Screen(props: Props) {
     ];
 
     const {selection} = props.state;
+
+    if (props.state.questionType == 'ibig') {
+        return getImageBigOG(props, selection, coords, buttons)
+    }
 
     if (props.state.questionType == 'image') {
         return getImageOG(props, selection, coords, buttons)
@@ -328,7 +332,7 @@ function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
             <WWTBAMUI
                 green={selection && selection.correct}
                 red={selection && selection.selected}
-            type={props.state.questionType}
+                type={props.state.questionType}
             />
             <div
                 tw="absolute flex items-center justify-center text-center text-white text-5xl overflow-hidden"
@@ -434,6 +438,62 @@ function getIntroOG(props: any) {
             }}>
                 {props.state.name ?? "Quiz"}
             </div>
+        </div>
+    );
+
+}
+
+function getImageBigOG(props: any, selection: any, coords: any, buttons: any) {
+    return (
+        <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
+            {
+                <img
+                    src={props.state.backgroundUrl}
+                    tw="absolute w-full h-full"
+                />
+            }
+            <div
+                tw="absolute flex items-center justify-center overflow-hidden"
+                style={{
+                    width: 600,
+                    height: 600,
+                    borderRadius: '50%', // Делает контейнер кругом
+                    overflow: 'hidden', // Обрезает содержимое вне круга
+                    border: '3px solid white', // Белая рамка вокруг круга
+                    backgroundColor: 'black', // Фон внутри круга
+                }}
+            >
+                <img
+                    src={props.state.questionUrl}
+                    alt="Question"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain', // Масштабирует изображение, чтобы оно полностью заполнило контейнер
+                    }}
+                />
+            </div>
+
+            <div
+                tw="absolute flex items-center justify-center text-center text-white text-4xl overflow-hidden"
+                style={{
+                    left: 325, top: 550, width: 600, height: 70,
+
+                }}
+            >
+                <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
+
+              <span
+              >
+                  Created by
+                  <span style={{
+                      color: "#5cda09", marginRight: 10, marginLeft: 10
+                  }}>D1ol
+                  </span>
+              </span>
+                </div>
+            </div>
+
         </div>
     );
 }
