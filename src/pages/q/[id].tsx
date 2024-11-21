@@ -172,6 +172,27 @@ function render(
       buttons: ["Play Again"],
     };
   }
+
+  if(question.questionType == 'ibig')
+  {
+    return {
+      props: {
+        v: 1,
+        state: {
+          type: "question",
+          question: question.question,
+          questionType: question.questionType,
+          questionUrl: question.questionUrl,
+          answers: question.answers,
+          selection: null,
+          backgroundUrl: question.backgroundUrl,
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+        },
+      },
+      buttons: ["Write you answer"].slice(0, question.answers.length),
+    };
+  }
+
   if (state.selected == null) {
     return {
       props: {
