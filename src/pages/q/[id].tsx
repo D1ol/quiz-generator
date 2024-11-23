@@ -142,6 +142,22 @@ function render(
   props: Props;
   buttons: string[];
 } {
+  const buttonsLabels = [
+    ["A", "B", "C", "D"],
+    ["1", "2", "3", "4"],
+    ["j", "K", "S", "M"],
+    ["U", "V", "W", "X"],
+    ["H", "I", "J", "P"],
+    ["F1", "F2", "F3", "F4"],
+  ];
+
+  let buttons = buttonsLabels[0];
+
+  if (quiz.randomAnswerLabels ?? false) {
+    buttons = buttonsLabels[~~(Math.random() * buttonsLabels.length)];
+  }
+
+
   if (state.index === 0) {
     return {
       props: {
@@ -150,7 +166,8 @@ function render(
           type: "intro",
           name: quiz.name,
           backgroundUrl: quiz.backgroundUrl,
-          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false,
+          buttons: buttons
         },
       },
       buttons: ["Start"],
@@ -166,7 +183,8 @@ function render(
           type: "result",
           win: state.score === quiz.questions.length,
           backgroundUrl: quiz.backgroundUrl,
-          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false,
+          buttons: buttons
         },
       },
       buttons: ["Play Again"],
@@ -186,7 +204,8 @@ function render(
           answers: question.answers,
           selection: null,
           backgroundUrl: question.backgroundUrl,
-          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false,
+          buttons: buttons
         },
       },
       buttons: ["Write you answer"].slice(0, question.answers.length),
@@ -205,10 +224,11 @@ function render(
           answers: question.answers,
           selection: null,
           backgroundUrl: question.backgroundUrl,
-          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false,
+          buttons: buttons
         },
       },
-      buttons: ["A", "B", "C", "D"].slice(0, question.answers.length),
+      buttons: buttons.slice(0, question.answers.length),
     };
   } else {
     const question = quiz.questions[state.index - 1];
@@ -226,7 +246,8 @@ function render(
             correct: question.correct,
           },
           backgroundUrl: question.backgroundUrl,
-          randomAnswerLabels: quiz.randomAnswerLabels ?? false
+          randomAnswerLabels: quiz.randomAnswerLabels ?? false,
+          buttons: buttons
         },
       },
       buttons: ["Continue"],

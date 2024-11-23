@@ -11,7 +11,8 @@ const schema = z.object({
             type: z.literal("intro"),
             name: z.string().optional(),
             backgroundUrl: z.string().min(1),
-            randomAnswerLabels: z.boolean()
+            randomAnswerLabels: z.boolean(),
+            buttons: z.array(z.string())
         }),
         z.object({
             type: z.literal("question"),
@@ -26,13 +27,15 @@ const schema = z.object({
                 })
                 .nullable(),
             backgroundUrl: z.string().min(1),
-            randomAnswerLabels: z.boolean()
+            randomAnswerLabels: z.boolean(),
+            buttons: z.array(z.string())
         }),
         z.object({
             type: z.literal("result"),
             win: z.boolean(),
             backgroundUrl: z.string().min(1),
-            randomAnswerLabels: z.boolean()
+            randomAnswerLabels: z.boolean(),
+            buttons: z.array(z.string())
         }),
     ]),
 });
@@ -47,28 +50,12 @@ export const ImageData = {
 };
 
 function Screen(props: Props) {
-    console.log(props);
     if (props.state.type === "intro") {
         return getIntroOG(props);
     }
 
     if (props.state.type === "result") {
         return getResultOG(props)
-    }
-
-    const buttonsLabels = [
-        ["A", "B", "C", "D"],
-        ["1", "2", "3", "4"],
-        ["j", "K", "S", "M"],
-        ["U", "V", "W", "X"],
-        ["H", "I", "J", "P"],
-        ["F1", "F2", "F3", "F4"],
-    ];
-
-    let buttons = buttonsLabels[0];
-
-    if (props.state.randomAnswerLabels) {
-        buttons = buttonsLabels[~~(Math.random() * buttonsLabels.length)];
     }
 
     const coords = [
@@ -81,14 +68,15 @@ function Screen(props: Props) {
     const {selection} = props.state;
 
     if (props.state.questionType == 'ibig') {
-        return getImageBigOG(props, selection, coords, buttons)
+        return getImageBigOG(props, selection, coords)
     }
 
     if (props.state.questionType == 'image') {
-        return getImageOG(props, selection, coords, buttons)
+        return getImageOG(props, selection, coords)
     }
-
-    return getDefaultOG(props, selection, coords, buttons)
+    console.log(props);
+    // debugger;
+    return getDefaultOG(props, selection, coords)
 }
 
 export default async function handler(req: NextRequest) {
@@ -176,7 +164,7 @@ function WWTBAMUI({
             />
         </svg>)
     }
-    <svg
+    return (<svg
         width="1200"
         height="630"
         viewBox="0 0 1200 630"
@@ -237,12 +225,11 @@ function WWTBAMUI({
             stroke="white"
             stroke-width="3"
         />
-    </svg>
-    ;
+    </svg>);
 }
 
 
-function getImageOG(props: any, selection: any, coords: any, buttons: any) {
+function getImageOG(props: any, selection: any, coords: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
@@ -289,7 +276,7 @@ function getImageOG(props: any, selection: any, coords: any, buttons: any) {
               <span style={{
                   color: "#FFBF00", marginRight: 10,
               }}>
-                {buttons[index]}:
+                 {props.state.buttons[index]}:
               </span>{" "}
                 {answer}
             </span>
@@ -320,7 +307,7 @@ function getImageOG(props: any, selection: any, coords: any, buttons: any) {
     );
 }
 
-function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
+function getDefaultOG(props: any, selection: any, coords: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
@@ -346,6 +333,7 @@ function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
             </div>
 
             {props.state.answers.map((answer: any, index: any) => {
+                console.log(props.buttons, answer)
                 return (
                     <div
                         key={index}
@@ -361,7 +349,7 @@ function getDefaultOG(props: any, selection: any, coords: any, buttons: any) {
               <span style={{
                   color: "#FFBF00", marginRight: 10,
               }}>
-                {buttons[index]}:
+                {props.state.buttons[index]}:
               </span>{" "}
                 {answer}
             </span>
@@ -443,7 +431,7 @@ function getIntroOG(props: any) {
 
 }
 
-function getImageBigOG(props: any, selection: any, coords: any, buttons: any) {
+function getImageBigOG(props: any, selection: any, coords: any) {
     return (
         <div tw="relative bg-black w-full h-full flex flex-col items-center justify-center">
             {
