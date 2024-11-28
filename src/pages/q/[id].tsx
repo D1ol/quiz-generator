@@ -208,7 +208,7 @@ function render(
           buttons: buttons
         },
       },
-      buttons: ["Write you answer"].slice(0, question.answers.length),
+      buttons: ["Write your answer"].slice(0, question.answers.length),
     };
   }
 
